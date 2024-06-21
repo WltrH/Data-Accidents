@@ -2,7 +2,15 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import matplotlib as plt
-import folium
+import plotly.express as px
+import warnings
+#import folium as fo
+
+from streamlit_extras import dataframe_explorer
+from streamlit_extras.chart_container import chart_container
+
+warnings.filterwarnings('ignore')
+
 
 #Importation of AccidentUS.json
 df = pd.read_json('/path/to/AccidentUS.json')
