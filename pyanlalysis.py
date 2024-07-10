@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib as plt
 import plotly.express as px
 import warnings
-#import folium as fo
+import folium as fo
 
 #from streamlit_extras import dataframe_explorer
 #from streamlit_extras.chart_container import chart_container
@@ -43,5 +43,5 @@ st.write(df)
 
 # Exemple : Afficher une carte
 
-m = folium.Map(location=[48.8566, 2.3522], zoom_start=12)
+m = fo.Map(location=[48.8566, 2.3522], zoom_start=12)
 st.map(m)
