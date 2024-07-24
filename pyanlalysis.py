@@ -49,3 +49,19 @@ with st.container():
 
     # Afficher le data frame
     st.write(df)
+
+ # Container 3
+ 
+with st.container():
+    st.write("This is a container")
+    st.write("You can use it to organize your content")
+
+    # Container 3
+    with st.container():
+        st.write("This is a container")
+        st.write("You can use it to organize your content")
+
+        # Create a bar chart using matplotlib
+        fig, ax = plt.subplots()
+        ax.bar(df['column_name'], df['column_name'])
+        st.pyplot(fig)
