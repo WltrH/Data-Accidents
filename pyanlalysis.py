@@ -41,7 +41,19 @@ df = pd.DataFrame(data)
 
 st.write(df)
 
-# Exemple : Afficher une carte
+####################Setting######################
+page_title = "Crime Rate USA Data Analysis"
+page_icon = ":bar_chart:"
+layout = "centered"
+st.set_page_config(page_title=page_title, page_icon=page_icon, layout=layout)
+st.title(page_title + " " + page_icon)
 
-m = fo.Map(location=[48.8566, 2.3522], zoom_start=12)
-st.map(m)
+with st.container():
+    st.write("This is a container")
+    st.write("You can use it to organize your content")
+
+    m = fo.Map(location=[48.8566, 2.3522], zoom_start=12)
+    st.map(m)
+
+    # Display the data frame
+    st.write(df)
