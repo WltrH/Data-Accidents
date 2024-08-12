@@ -13,8 +13,19 @@ warnings.filterwarnings('ignore')
 
 
 #Importation of AccidentUS.json
-
 df = pd.read_json('/path/to/AccidentUS.json')
+
+# prise des données qui nous intéressent
+colonnes = ['Crash Date/Time', 'Hit/Run', 'Route Type', 'Lane Direction',
+    'Lane Type', 'Number of Lanes', 'Weather', 'Surface Condition', 'Light',
+    'Traffic Control', 'Driver Substance Abuse',
+    'Non-Motorist Substance Abuse', 'Collision Type', 'Related Non-Motorist',
+    'At Fault', 'First Harmful Event', 'Second Harmful Event', 'Latitude',
+    'Longitude', 'Location']
+df = colonnes
+
+# Affichage des données
+st.write(df)
 
 # Titre de l'application
 st.title("Analyse scientifique avec Streamlit")
@@ -29,10 +40,16 @@ st.title(page_title + " " + page_icon)
 # Container 1
 with st.container():
     st.write("This is a container")
-    st.write("You can use it to organize your content")
+    st.write("Tentative d'analyse de données")
 
-    m = fo.Map(location=[48.8566, 2.3522], zoom_start=12)
-    st.map(m)
+    #création d'un graphique histogramme sur le nombre d'accident par années
+    #fig = px.histogram(df, x='Crash Date/Time', y=('ACRS Report Type'), title='Nombre d\'accidents par années')
+    #st.plotly_chart(fig)
+
+    #Création histogramme du nombre totale d'accident pas années
+    fig = px.histogram(df, x='Crash Date/Time', y=('ACRS Report Type'), title='Nombre total d\'accidents par années')
+    st.plotly_chart(fig)
+
 
     # Display the data frame
     st.write(df)
