@@ -2,7 +2,7 @@ import streamlit as st
 import streamlit_extras as stx
 import numpy as np
 import pandas as pd
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import plotly.express as px
 import warnings
 
