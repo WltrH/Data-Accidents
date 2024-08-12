@@ -10,7 +10,7 @@ from streamlit_extras import dataframe_explorer
 from streamlit_extras.chart_container import chart_container
 
 warnings.filterwarnings('ignore')
-
+#test de comit et de push sur main mais aucune trace sur le github depuis ce matin
 
 #Importation of AccidentUS.json
 df = pd.read_json('/path/to/AccidentUS.json')
