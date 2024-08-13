@@ -62,8 +62,6 @@ with st.container():
     st.write("Vous pouvez l'utiliser pour organiser votre contenu")
 
 
-    m = fo.Map(location=[48.8566, 2.3522], zoom_start=12)
-    st.map(m)
 
     # Afficher le data frame
     st.write(df)
