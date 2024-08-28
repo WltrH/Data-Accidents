@@ -58,7 +58,7 @@ st.markdown('---')
 with st.container():
 
     #Title
-    st.subheader("Carte de chaleurt des accidents par localisation")
+    st.subheader("Carte des accidents par localisation")
 
     #DataSet creation with the latitude and longitude columns and colision type
     data = data[['Latitude', 'Longitude', 'Collision Type']]
@@ -68,3 +68,9 @@ with st.container():
     st.map(data)
 
 st.markdown('---')
+
+with st.container():
+    #Title
+    st.subheader("Carte de chaleur des accidents par type de collision")
+    #bar chart of number of accidents by collision type
+    fig2 = st.bar_chart(data['Collision Type'].value_counts())
