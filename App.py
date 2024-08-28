@@ -55,3 +55,16 @@ with st.container():
  
 st.markdown('---')
 
+with st.container():
+
+    #Title
+    st.subheader("Carte de chaleurt des accidents par localisation")
+
+    #DataSet creation with the latitude and longitude columns and colision type
+    data = data[['Latitude', 'Longitude', 'Collision Type']]
+    #rename the columns Latitude and Longitude
+    data = data.rename(columns={"Latitude": "lat", "Longitude": "lon"})
+    #Heat map of accidents by location
+    st.map(data)
+
+st.markdown('---')
