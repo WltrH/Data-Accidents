@@ -74,3 +74,11 @@ with st.container():
     st.subheader("Carte de chaleur des accidents par type de collision")
     #bar chart of number of accidents by collision type
     fig2 = st.bar_chart(data['Collision Type'].value_counts())
+
+with st.container():
+    #Title
+    st.subheader("Nombre d'accidents par type de collision")
+    #Heat map of accidents by collision type
+    sns.heatmap(data['Collision Type'].value_counts().unstack(), annot=True, fmt="d")
+    plt.show()
+    st.pyplot()
