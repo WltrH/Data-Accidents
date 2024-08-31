@@ -86,3 +86,11 @@ with st.container():
     st.pyplot()
 
 st.markdown('---')
+
+with st.container():
+    #Title
+    st.subheader("Nombre d'accidents par type de collision et par année")
+    #Heat map of accidents by collision type and year
+    sns.heatmap(data.groupby([data['Crash Date/Time'].dt.year, 'Collision Type']).size().unstack(), annot=True, fmt="d")
+    plt.show()
+    st.pyplot()
