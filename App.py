@@ -75,6 +75,8 @@ with st.container():
     #bar chart of number of accidents by collision type
     fig2 = st.bar_chart(data['Collision Type'].value_counts())
 
+st.markdown('---')
+
 with st.container():
     #Title
     st.subheader("Nombre d'accidents par type de collision")
@@ -82,3 +84,5 @@ with st.container():
     sns.heatmap(data['Collision Type'].value_counts().unstack(), annot=True, fmt="d")
     plt.show()
     st.pyplot()
+
+st.markdown('---')
