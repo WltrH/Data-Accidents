@@ -8,8 +8,11 @@ import numpy as np
 
 
 #Set Navigation bar
-st.set_page_config(page_title="Data Viszualisation Application", page_icon="🚗", layout="wide"
-                   , initial_sidebar_state="expanded")
+#st.set_page_config(page_title="Data Viszualisation Application", page_icon="🚗", layout="wide"
+#                   , initial_sidebar_state="expanded")
+
+
+
 
 
 
@@ -35,25 +38,37 @@ with st.container():
 
 st.markdown('---')
 
-with st.container():
-    #Title
-    st.subheader("Veuillez choisir l'année, le mois et le jour pour visualiser les données")
-    #Select the year
-    year = st.selectbox("Choisissez l'Année",(data['Crash Date/Time'].dt.year.unique()), index=None, key=None)
 
-   
 
-st.markdown('---')
+
 
 with st.container():
     #Title
-    st.subheader("Nombre d'accidents par année")
+    st.subheader("Nombre d'accidents par Années")
     #DataSet creation
     data['Crash Date/Time'] = pd.to_datetime(data['Crash Date/Time'])
     #bar chart of number of accidents by years
     fig = st.bar_chart(data['Crash Date/Time'].dt.year.value_counts())
 
     
+st.markdown('---')
+
+#Title
+st.subheader("Veuillez choisir l'année, le mois et le jour pour visualiser les données")
+#Select the year
+option = st.selectbox(
+    "Quelle année souhaitez vous sélèctionner?",
+    ("2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024")
+)
+
+
+with st.container():
+    #Title
+    st.subheader("Nombre d'accidents pour l'année: " + option)
+   
+    #bar chart of number of accidents by years with the year selected in the selectbox
+    fig = st.bar_chart(data[data['Crash Date/Time'].dt.year == int(option)]['Crash Date/Time'].dt.month.value_counts())
+
 st.markdown('---')
 
 with st.container():
@@ -99,21 +114,3 @@ with st.container():
     fig2 = st.bar_chart(data['Collision Type'].value_counts())
 
 st.markdown('---')
-
-with st.container():
-    #Title
-    st.subheader("Nombre d'accidents par type de collision")
-    #Heat map of accidents by collision type
-    sns.heatmap(data['Collision Type'].value_counts().unstack(), annot=True, fmt="d")
-    plt.show()
-    st.pyplot()
-
-st.markdown('---')
-
-with st.container():
-    #Title
-    st.subheader("Nombre d'accidents par type de collision et par année")
-    #Heat map of accidents by collision type and year
-    sns.heatmap(data.groupby([data['Crash Date/Time'].dt.year, 'Collision Type']).size().unstack(), annot=True, fmt="d")
-    plt.show()
-    st.pyplot()
