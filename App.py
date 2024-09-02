@@ -4,14 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
-
-
-
-#Set Navigation bar
-st.set_page_config(page_title="Data Viszualisation Application", page_icon="🚗", layout="wide"
-                   , initial_sidebar_state="expanded")
-
-
+import folium as fo
 
 
 
@@ -81,7 +74,7 @@ with st.container():
     ax1.axis('equal')
 
     #background color of the pie chart transparent
-    fig1.patch.set_facecolor('none')
+    fig1.patch.set_facecolor('white')
 
     #Display the pie chart
     st.pyplot(fig1)
@@ -111,3 +104,15 @@ with st.container():
     fig2 = st.bar_chart(data['Collision Type'].value_counts())
 
 st.markdown('---')
+
+with st.container():
+    #Title
+    st.subheader("Carte de chaleur des accidents par localisation")
+    #heat map of accidents by years selected in option and location using folium
+    accidents = data[data['Crash Date/Time'].dt.year == int(option)]
+    accidents = accidents[['lat', 'lon']]
+    accidents = accidents.dropna()
+    accidents = accidents.values.tolist()
+    map = fo.Map(location=[39.045753, -76.641273], zoom_start=10)
+    fo.plugins.HeatMap(accidents).add_to(map)
+    st.write(map)
