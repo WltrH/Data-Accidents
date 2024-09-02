@@ -107,6 +107,26 @@ st.markdown('---')
 
 with st.container():
     #Title
+    st.subheader("Comparaison du nombre d'accidents par mois")
+    #DataSet creation for all accidents by month
+    df = data
+    df['Year'] = pd.to_datetime(df['Crash Date/Time']).dt.year
+    df['Month'] = pd.to_datetime(df['Crash Date/Time']).dt.month
+
+    df_monthly_crashes = df.groupby(['Year', 'Month']).size().reset_index(name='Crash Count')
+
+    df_monthly_crashes.plot(x='Month', y='Crash Count', kind='scatter', colorbar=True, c='Year', colormap='viridis')
+    plt.title('Monthly Crashes')
+    plt.xlabel('Month')
+    plt.ylabel('Crash Count')
+
+    #Display the scatter plot
+    st.pyplot()
+
+st.markdown('---')
+
+with st.container():
+    #Title
     st.subheader("Carte de chaleur des accidents par localisation")
     #heat map of accidents by years selected in option and location using folium
     accidents = data[data['Crash Date/Time'].dt.year == int(option)]
