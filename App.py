@@ -8,8 +8,8 @@ import numpy as np
 
 
 #Set Navigation bar
-#st.set_page_config(page_title="Data Viszualisation Application", page_icon="🚗", layout="wide"
-#                   , initial_sidebar_state="expanded")
+st.set_page_config(page_title="Data Viszualisation Application", page_icon="🚗", layout="wide"
+                   , initial_sidebar_state="expanded")
 
 
 
@@ -37,9 +37,6 @@ with st.container():
     st.write(data)
 
 st.markdown('---')
-
-
-
 
 
 with st.container():
