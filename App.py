@@ -6,22 +6,43 @@ import seaborn as sns
 import numpy as np
 
 
+
+#Set Navigation bar
+st.set_page_config(page_title="Data Viszualisation Application", page_icon="🚗", layout="wide"
+                   , initial_sidebar_state="expanded")
+
+
+
 #Tittle of the application
 st.title("Application de visualisation de données")
 
 with st.container():
     st.write("Bienvenue sur notre application de visualisation de données")
     st.write("Cette application permet de visualiser les données des accidents de la route du Maryland")
+
+
+with st.container():
     st.write("Vous pouvez visualiser les données ci-dessous")
 
-#Download the CSV file Crash_Reporting_-_Incidents_Data.csv
-data = pd.read_csv("Crash_Reporting_-_Incidents_Data.csv")
+    #Download the CSV file Crash_Reporting_-_Incidents_Data.csv
+    data = pd.read_csv("Crash_Reporting_-_Incidents_Data.csv")
 
-#Drop some columns
-data = data.drop(columns=["Lane Type", "Off-Road Description", "Municipality", "Related Non-Motorist", "Non-Motorist Substance Abuse", "Second Harmful Event", "Intersection Type"])
+    #Drop some columns
+    data = data.drop(columns=["Lane Type", "Off-Road Description", "Municipality", "Related Non-Motorist", "Non-Motorist Substance Abuse", "Second Harmful Event", "Intersection Type"])
 
-#Display the data
-st.write(data)
+    #Display the data
+    st.write(data)
+
+st.markdown('---')
+
+with st.container():
+    #Title
+    st.subheader("Veuillez choisir l'année, le mois et le jour pour visualiser les données")
+    #Select the year
+    year = st.selectbox("Choisissez l'Année",(data['Crash Date/Time'].dt.year.unique()), index=None, key=None)
+
+   
+
 st.markdown('---')
 
 with st.container():
@@ -31,7 +52,7 @@ with st.container():
     data['Crash Date/Time'] = pd.to_datetime(data['Crash Date/Time'])
     #bar chart of number of accidents by years
     fig = st.bar_chart(data['Crash Date/Time'].dt.year.value_counts())
-   
+
     
 st.markdown('---')
 
@@ -71,7 +92,9 @@ st.markdown('---')
 
 with st.container():
     #Title
-    st.subheader("Carte de chaleur des accidents par type de collision")
+    st.subheader("Nombre de ype de collision total")
+    #Name in lowercase
+    data['Collision Type'] = data['Collision Type'].str.lower()
     #bar chart of number of accidents by collision type
     fig2 = st.bar_chart(data['Collision Type'].value_counts())
 
