@@ -136,3 +136,5 @@ with st.container():
     map = fo.Map(location=[39.045753, -76.641273], zoom_start=10)
     fo.plugins.HeatMap(accidents).add_to(map)
     st.write(map)
+
+st.markdown('---')
