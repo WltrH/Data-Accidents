@@ -97,7 +97,7 @@ st.markdown('---')
 
 with st.container():
     #Title
-    st.subheader("Nombre de ype de collision total")
+    st.subheader("Nombre de Type de collisionR")
     #Name in lowercase
     data['Collision Type'] = data['Collision Type'].str.lower()
     #bar chart of number of accidents by collision type
@@ -105,36 +105,22 @@ with st.container():
 
 st.markdown('---')
 
+
 with st.container():
     #Title
-    st.subheader("Comparaison du nombre d'accidents par mois")
-    #DataSet creation for all accidents by month
-    df = data
-    df['Year'] = pd.to_datetime(df['Crash Date/Time']).dt.year
-    df['Month'] = pd.to_datetime(df['Crash Date/Time']).dt.month
+    st.subheader("Nombre d'accidents par Années")
 
-    df_monthly_crashes = df.groupby(['Year', 'Month']).size().reset_index(name='Crash Count')
+    chart_data = pd.DataFrame(data["Crash Date/Time"], columns=data["Crash Count"])
 
-    df_monthly_crashes.plot(x='Month', y='Crash Count', kind='scatter', colorbar=True, c='Year', colormap='viridis')
-    plt.title('Monthly Crashes')
-    plt.xlabel('Month')
-    plt.ylabel('Crash Count')
+    st.scatter_chart(chart_data)
 
-    #Display the scatter plot
-    st.pyplot()
 
 st.markdown('---')
 
 with st.container():
     #Title
-    st.subheader("Carte de chaleur des accidents par localisation")
-    #heat map of accidents by years selected in option and location using folium
-    accidents = data[data['Crash Date/Time'].dt.year == int(option)]
-    accidents = accidents[['lat', 'lon']]
-    accidents = accidents.dropna()
-    accidents = accidents.values.tolist()
-    map = fo.Map(location=[39.045753, -76.641273], zoom_start=10)
-    fo.plugins.HeatMap(accidents).add_to(map)
-    st.write(map)
+    st.subheader("Comparaison du nombre d'accidents par mois")
+    #DataSet creation for all accidents by month
+
 
 st.markdown('---')
