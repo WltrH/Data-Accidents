@@ -16,12 +16,12 @@ with st.container():
     st.write("Bienvenue sur notre application de visualisation de données")
     st.write("Cette application permet de visualiser les données des accidents de la route du Maryland")
 
-
+    #Download the CSV file Crash_Reporting_-_Incidents_Data.csv
+    data = pd.read_csv("Crash_Reporting_-_Incidents_Data.csv")
 with st.container():
     st.write("Vous pouvez visualiser les données ci-dessous")
 
-    #Download the CSV file Crash_Reporting_-_Incidents_Data.csv
-    data = pd.read_csv("Crash_Reporting_-_Incidents_Data.csv")
+
 
     #Drop some columns
     data = data.drop(columns=["Lane Type", "Off-Road Description", "Municipality", "Related Non-Motorist", "Non-Motorist Substance Abuse", "Second Harmful Event", "Intersection Type"])
@@ -97,7 +97,7 @@ st.markdown('---')
 
 with st.container():
     #Title
-    st.subheader("Nombre de Type de collisionR")
+    st.subheader("Nombre de Type de collision")
     #Name in lowercase
     data['Collision Type'] = data['Collision Type'].str.lower()
     #bar chart of number of accidents by collision type
@@ -105,22 +105,22 @@ with st.container():
 
 st.markdown('---')
 
-
 with st.container():
+
+    #Download the CSV file Crash_Reporting_-_Incidents_Data.csv
+    data = pd.read_csv("Crash_Reporting_-_Incidents_Data.csv")
+    #Drop some columns
+    data = data.drop(columns=["Lane Type", "Off-Road Description", "Municipality", "Related Non-Motorist", "Non-Motorist Substance Abuse", "Second Harmful Event", "Intersection Type"])
+    #DataSet creation
+    data['Crash Date/Time'] = pd.to_datetime(data['Crash Date/Time'])
+    #Group by year and month
+    data = data.groupby([data['Crash Date/Time'].dt.year, data['Crash Date/Time'].dt.month]).size().unstack()
     #Title
-    st.subheader("Nombre d'accidents par Années")
-
-    chart_data = pd.DataFrame(data["Crash Date/Time"], columns=data["Crash Count"])
-
-    st.scatter_chart(chart_data)
+    st.subheader("Nombre d'accidents par mois et par Années")
+    #Display the data
+    st.write(data)
 
 
-st.markdown('---')
-
-with st.container():
-    #Title
-    st.subheader("Comparaison du nombre d'accidents par mois")
-    #DataSet creation for all accidents by month
 
 
 st.markdown('---')
