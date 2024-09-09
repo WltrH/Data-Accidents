@@ -143,7 +143,7 @@ with st.container():
 
 
 with st.container():
-
+    #Different way to display the data
     #Download the CSV file Crash_Reporting_-_Incidents_Data.csv
     dataAcc = pd.read_csv("Crash_Reporting_-_Incidents_Data.csv")
     #Drop some columns
