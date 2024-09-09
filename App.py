@@ -138,8 +138,8 @@ with st.container():
     #st.write(dacc)
 
     #test scatter plot
-    fig = px.scatter(dacc, x="Month", y="count", color="Crash Date/Time")
-    st.plotly_chart(fig)
+    fig3 = px.scatter(dacc, x="Month", y="count", color="Crash Date/Time")
+    st.plotly_chart(fig3)
 
 
 with st.container():
