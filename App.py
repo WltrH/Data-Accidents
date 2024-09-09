@@ -1,10 +1,10 @@
 #importation des modules streamlit et pandas
 import streamlit as st
+from bokeh.plotting import figure
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 import numpy as np
-import folium as fo
+import plotly.express as px
 
 
 
@@ -107,20 +107,67 @@ st.markdown('---')
 
 with st.container():
 
-    #Download the CSV file Crash_Reporting_-_Incidents_Data.csv
-    data = pd.read_csv("Crash_Reporting_-_Incidents_Data.csv")
-    #Drop some columns
-    data = data.drop(columns=["Lane Type", "Off-Road Description", "Municipality", "Related Non-Motorist", "Non-Motorist Substance Abuse", "Second Harmful Event", "Intersection Type"])
-    #DataSet creation
-    data['Crash Date/Time'] = pd.to_datetime(data['Crash Date/Time'])
-    #Group by year and month
-    data = data.groupby([data['Crash Date/Time'].dt.year, data['Crash Date/Time'].dt.month]).size().unstack()
-    #Title
+    #title
     st.subheader("Nombre d'accidents par mois et par Années")
+    #Download the CSV file Crash_Reporting_-_Incidents_Data.csv
+    dacc = pd.read_csv("Crash_Reporting_-_Incidents_Data.csv")
+    #keep columns crash date/time and collision type and drop the others
+    dacc = dacc[['Crash Date/Time', 'ACRS Report Type']]
+    #New column counting the number of accidents
+    dacc['count'] = 1
+    #Columns with the month
+    dacc['Month'] = 0
+    #Separation of the month from the date and push in the column Month
+    for i in range(len(dacc)):
+        dacc['Month'][i] = dacc['Crash Date/Time'][i].split('/')[0]
+    #keep just the year in the column Crash Date/Time
+    dacc['Crash Date/Time'] = dacc['Crash Date/Time'].str.split('/').str[2]
+    #delete the hours in the column Crash Date/Time
+    dacc['Crash Date/Time'] = dacc['Crash Date/Time'].str.split().str[0]
+    #Group by year and month
+    dacc = dacc.groupby(['Crash Date/Time', 'Month']).sum()
+    #delete the colonne ARCS Report Type
+    dacc = dacc.drop(columns=['ACRS Report Type'])
+    #reset the index
+    dacc = dacc.reset_index()
+    #Group by year and month
+    dacc = dacc.groupby(['Crash Date/Time', 'Month']).sum()
+    #reset the index
+    dacc = dacc.reset_index()
+    #Display the data   
+    #st.write(dacc)
+
+    #test scatter plot
+    fig = px.scatter(dacc, x="Month", y="count", color="Crash Date/Time")
+    st.plotly_chart(fig)
+
+
+with st.container():
+
+    #Download the CSV file Crash_Reporting_-_Incidents_Data.csv
+    dataAcc = pd.read_csv("Crash_Reporting_-_Incidents_Data.csv")
+    #Drop some columns
+    dataAcc = dataAcc.drop(columns=["Lane Type", "Off-Road Description", "Municipality", "Related Non-Motorist", "Non-Motorist Substance Abuse", "Second Harmful Event", "Intersection Type"])
+    #DataSet creation
+    dataAcc['Crash Date/Time'] = pd.to_datetime(dataAcc['Crash Date/Time'])
+    #Group by year and month
+    dataAcc = dataAcc.groupby([dataAcc['Crash Date/Time'].dt.year, dataAcc['Crash Date/Time'].dt.month]).size().unstack()
+    #index
+    dataAcc.index = dataAcc.index.astype(str)
+    #columns
+    dataAcc.columns = dataAcc.columns.astype(str)
+    #Fill the missing values with 0
+    dataAcc = dataAcc.fillna(0)
+    #creation new column of index
+    dataAcc['index'] = dataAcc.index
+    #reset the index
+    dataAcc = dataAcc.reset_index(drop=True)
+    #set the index
+    dataAcc = dataAcc.set_index('index')
+    #Title
+    st.subheader("Tableau des accidents par Années et par Mois")
     #Display the data
-    st.write(data)
+    st.write(dataAcc)
 
-
-#test de commit
 
 st.markdown('---')
