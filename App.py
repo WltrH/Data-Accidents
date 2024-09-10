@@ -175,4 +175,17 @@ st.markdown('---')
 with st.container():
 
     #Title
+    st.subheader("Impact type de route et direction des accidents")
+    # Charger les données
+    data_route = pd.read_csv("Crash_Reporting_-_Incidents_Data.csv")
     
+    # Créer un graphique en barres pour les types de route
+    fig_route = px.bar(data_route, x='Route Type', title='Types de route impliqués dans les accidents')
+    st.plotly_chart(fig_route)
+    
+    # Créer un graphique en barres pour les directions des accidents
+    fig_direction = px.bar(data_route, x='Direction', title='Directions des accidents')
+    st.plotly_chart(fig_direction)
+    
+    # Afficher une explication
+    st.write("Ces graphiques montrent la distribution des accidents selon le type de route et la direction.")
