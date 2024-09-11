@@ -9,8 +9,35 @@ import plotly.express as px
 
 
 
-#Tittle of the application
-st.title("Application de visualisation de données")
+# Configuration de la page
+st.set_page_config(
+    page_title="Analyse des Accidents - Maryland",
+    page_icon="🚗",
+    layout="wide"
+)
+
+# Style personnalisé
+st.markdown("""
+    <style>
+    .main > div {
+        padding-top: 2rem;
+    }
+    .stTitle {
+        font-size: 3rem;
+        color: #1E3A8A;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    .stSubheader {
+        color: #2563EB;
+        font-size: 1.5rem;
+        margin-top: 2rem;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+# Titre de l'application
+st.title("🚗 Analyse des Accidents de la Route du Maryland")
 
 with st.container():
     st.write("Bienvenue sur notre application de visualisation de données")
@@ -189,3 +216,7 @@ with st.container():
     
     # Afficher une explication
     st.write("Ces graphiques montrent la distribution des accidents selon le type de route et la direction.")
+
+# Ajout d'un pied de page
+st.markdown("---")
+st.markdown("© 2024 Analyse des Accidents - Maryland. Tous droits réservés.")
