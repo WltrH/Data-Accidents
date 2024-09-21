@@ -220,3 +220,32 @@ with st.container():
 # Ajout d'un pied de page
 st.markdown("---")
 st.markdown("© 2024 Analyse des Accidents - Maryland. Tous droits réservés.")
+
+with st.container():
+    # Titre de la section
+    st.subheader("Comparaison des accidents entre deux années")
+
+    # Sélection des années à comparer
+    col1, col2 = st.columns(2)
+    with col1:
+        annee1 = st.selectbox("Sélectionnez la première année", options=sorted(data['Crash Date/Time'].dt.year.unique()), key='annee1')
+    with col2:
+        annee2 = st.selectbox("Sélectionnez la deuxième année", options=sorted(data['Crash Date/Time'].dt.year.unique()), key='annee2')
+
+    # Préparation des données pour le graphique
+    df_compare = data.groupby([data['Crash Date/Time'].dt.year, data['Crash Date/Time'].dt.month]).size().unstack()
+    df_compare = df_compare.loc[[annee1, annee2]]
+    df_compare = df_compare.reset_index()
+    df_compare = df_compare.melt(id_vars=['Crash Date/Time'], var_name='Mois', value_name='Nombre d\'accidents')
+
+    # Création du graphique linéaire
+    fig_compare = px.line(df_compare, x='Mois', y='Nombre d\'accidents', color='Crash Date/Time',
+                          title=f'Comparaison des accidents entre {annee1} et {annee2}',
+                          labels={'Crash Date/Time': 'Année'},
+                          markers=True)
+
+    # Affichage du graphique
+    st.plotly_chart(fig_compare)
+
+    # Explication
+    st.write("Ce graphique permet de comparer l'évolution du nombre d'accidents mois par mois entre deux années choisies.")
